@@ -1,17 +1,22 @@
-// ×î¼ò»¯µÄÖĞ¼ä¼şÊµÏÖ
+// ç®€åŒ–çš„æˆæƒæ£€æŸ¥
 import { NextResponse } from 'next/server';
 
 export function middleware(request) {
   const path = request.nextUrl.pathname;
   
-  // ¼ò»¯µÄÊÚÈ¨¼ì²é
-  if (path.includes('/dashboard') || 
-      path.startsWith('/events/create') || 
-      path.includes('/edit') || 
-      path.startsWith('/profile') || 
-      path.startsWith('/settings')) {
-    
-    // ¼ì²é×î»ù±¾µÄ»á»°cookie
+  // ç®€åŒ–çš„æˆæƒæ£€æŸ¥
+  const authRequiredPaths = [
+    '/dashboard',
+    '/events/create',
+    '/profile',
+    '/settings'
+  ];
+  
+  const needsAuth = authRequiredPaths.some(p => path.startsWith(p)) || 
+                   /\/events\/[^/]+\/edit/.test(path);
+                   
+  if (needsAuth) {
+    // æ£€æŸ¥ä¼šè¯cookie
     const hasCookie = request.cookies.has('next-auth.session-token') || 
                      request.cookies.has('__Secure-next-auth.session-token');
                      
@@ -23,10 +28,13 @@ export function middleware(request) {
   return NextResponse.next();
 }
 
-// ¼ò»¯µÄmatcherÅäÖÃ
+// ç®€åŒ–çš„æˆæƒæ£€æŸ¥
 export const config = {
   matcher: [
-    '/(dashboard|events/create|profile|settings)/:path*',
-    '/events/:path*/edit'
+    '/dashboard/:path*',
+    '/events/create',
+    '/events/:path*/edit',
+    '/profile',
+    '/settings/:path*'
   ]
 };
