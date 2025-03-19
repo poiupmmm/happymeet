@@ -1,26 +1,19 @@
-// 简化的授权检查
 import { NextResponse } from 'next/server';
 
+// 极简中间件实现
 export function middleware(request) {
   const path = request.nextUrl.pathname;
   
-  // 简化的授权检查
-  const authRequiredPaths = [
-    '/dashboard',
-    '/events/create',
-    '/profile',
-    '/settings'
-  ];
-  
-  const needsAuth = authRequiredPaths.some(p => path.startsWith(p)) || 
-                   /\/events\/[^/]+\/edit/.test(path);
-                   
-  if (needsAuth) {
+  // 需要认证的路径前缀
+  if (path.startsWith('/dashboard') || 
+      path.startsWith('/events/create') || 
+      path.startsWith('/profile') || 
+      path.startsWith('/settings') ||
+      path.includes('/edit')) {
+    
     // 检查会话cookie
-    const hasCookie = request.cookies.has('next-auth.session-token') || 
-                     request.cookies.has('__Secure-next-auth.session-token');
-                     
-    if (!hasCookie) {
+    if (!request.cookies.has('next-auth.session-token') && 
+        !request.cookies.has('__Secure-next-auth.session-token')) {
       return NextResponse.redirect(new URL('/login', request.url));
     }
   }
@@ -28,13 +21,13 @@ export function middleware(request) {
   return NextResponse.next();
 }
 
-// 简化的授权检查
+// 使用简单匹配器
 export const config = {
   matcher: [
-    '/dashboard/:path*',
-    '/events/create',
-    '/events/:path*/edit',
-    '/profile',
+    '/dashboard/:path*', 
+    '/events/create', 
+    '/events/:id/edit', 
+    '/profile', 
     '/settings/:path*'
   ]
 };
