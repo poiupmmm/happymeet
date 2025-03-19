@@ -4,6 +4,14 @@ import { NextResponse } from 'next/server';
 export function middleware(request) {
   const path = request.nextUrl.pathname;
   
+  // 确保不处理根路径和静态资源
+  if (path === '/' || 
+      path.startsWith('/_next') || 
+      path.startsWith('/api/auth') ||
+      path.includes('.')) {
+    return NextResponse.next();
+  }
+  
   // 需要认证的路径前缀
   if (path.startsWith('/dashboard') || 
       path.startsWith('/events/create') || 
@@ -21,13 +29,9 @@ export function middleware(request) {
   return NextResponse.next();
 }
 
-// 使用简单匹配器
+// 使用简单匹配器，显式排除根路径
 export const config = {
   matcher: [
-    '/dashboard/:path*', 
-    '/events/create', 
-    '/events/:id/edit', 
-    '/profile', 
-    '/settings/:path*'
+    '/((?!api|_next/static|_next/image|favicon.ico).*)',
   ]
 };
