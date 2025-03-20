@@ -6,8 +6,11 @@ import { Providers } from './providers';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'HappyMeet - 活动管理平台',
-  description: '发现和参与你感兴趣的活动，结识志同道合的朋友',
+  title: 'HappyMeet - 一起快乐相聚',
+  description: '一个简单的社交活动组织平台',
+  icons: {
+    icon: '/favicon/favicon.ico',
+  },
 };
 
 export default function RootLayout({
