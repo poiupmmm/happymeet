@@ -7,6 +7,9 @@ const nextConfig = {
     domains: ['lh3.googleusercontent.com', 'avatars.githubusercontent.com', 'randomuser.me'],
   },
   output: 'standalone',
+  experimental: {
+    serverComponentsExternalPackages: ['@prisma/client', 'bcryptjs']
+  },
   typescript: {
     // !! 仅用于演示，生产环境不推荐
     ignoreBuildErrors: true,
