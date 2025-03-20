@@ -10,11 +10,14 @@
   "dependencies": {
     "@headlessui/react": "^1.7.15",
     "@heroicons/react": "^2.0.18",
+    "@hookform/resolvers": "^3.1.1",
     "axios": "^1.4.0",
     "next": "13.4.12",
     "next-auth": "^4.22.3",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "react-hook-form": "^7.45.2",
+    "yup": "^1.2.0"
   },
   "devDependencies": {
     "@types/node": "20.4.5",
