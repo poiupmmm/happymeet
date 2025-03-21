@@ -1,16 +1,22 @@
-export const dynamic = 'force-dynamic';
-export const runtime = 'nodejs';
+"use client";
 
-export default function CreateEventPage() {
+import { useRouter } from 'next/navigation';
+import { Label } from '@/components/ui/label';
+import { Select, SelectOption } from '@/components/ui/select';
+import { MapPin } from 'lucide-react';
+
+export default function CreateEventClient() {
+  const router = useRouter();
+  
   return (
     <div className="max-w-4xl mx-auto p-6">
       <div className="mb-6">
-        <a
-          href="/events"
+        <button
+          onClick={() => router.back()}
           className="text-blue-600 hover:underline flex items-center gap-1"
         >
           ← 返回
-        </a>
+        </button>
       </div>
 
       <h1 className="text-2xl font-bold mb-8">创建新活动</h1>
@@ -22,7 +28,7 @@ export default function CreateEventPage() {
 
         <div className="space-y-6">
           <div>
-            <label htmlFor="title" className="block text-sm font-medium">活动标题</label>
+            <Label htmlFor="title">活动标题</Label>
             <input
               id="title"
               type="text"
@@ -32,16 +38,16 @@ export default function CreateEventPage() {
           </div>
 
           <div>
-            <label htmlFor="group" className="block text-sm font-medium">所属群组</label>
-            <select id="group" className="w-full rounded-md border border-gray-300 p-2 mt-1">
-              <option value="">请选择群组</option>
-              <option value="1">户外探险俱乐部</option>
-              <option value="2">读书会</option>
-            </select>
+            <Label htmlFor="group">所属群组</Label>
+            <Select id="group" className="mt-1">
+              <SelectOption value="">请选择群组</SelectOption>
+              <SelectOption value="1">户外探险俱乐部</SelectOption>
+              <SelectOption value="2">读书会</SelectOption>
+            </Select>
           </div>
 
           <div>
-            <label htmlFor="location" className="block text-sm font-medium">活动地点</label>
+            <Label htmlFor="location">活动地点</Label>
             <div className="flex gap-2 mt-1">
               <input
                 id="location"
@@ -53,18 +59,19 @@ export default function CreateEventPage() {
                 type="button"
                 className="px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-50 flex items-center gap-1"
               >
+                <MapPin size={16} />
                 选点
               </button>
             </div>
           </div>
 
           <div className="flex gap-4">
-            <a
-              href="/events"
+            <button
+              onClick={() => router.push('/events')}
               className="px-6 py-2 border border-gray-300 rounded-md hover:bg-gray-50 transition-colors"
             >
               取消
-            </a>
+            </button>
             <button
               className="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
             >

@@ -19,12 +19,20 @@ const nextConfig = {
     ignoreDuringBuilds: true,
   },
   webpack: (config, { isServer }) => {
+    // 添加对node_modules的支持
     config.resolve.fallback = {
       ...config.resolve.fallback,
       fs: false,
       net: false,
       tls: false,
     };
+    
+    // 禁用严格模式，允许在客户端导入服务器组件
+    config.module = {
+      ...config.module,
+      exprContextCritical: false,
+    };
+    
     return config;
   },
 };
