@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
-import { auth } from "@/app/api/auth/[...nextauth]/route";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 
 // 获取评论详情
@@ -52,7 +53,7 @@ export async function PATCH(
   { params }: { params: { id: string; commentId: string } }
 ) {
   try {
-    const session = await auth();
+    const session = await getServerSession(authOptions);
 
     // 检查是否已登录
     if (!session) {
@@ -139,7 +140,7 @@ export async function DELETE(
   { params }: { params: { id: string; commentId: string } }
 ) {
   try {
-    const session = await auth();
+    const session = await getServerSession(authOptions);
 
     // 检查是否已登录
     if (!session) {
