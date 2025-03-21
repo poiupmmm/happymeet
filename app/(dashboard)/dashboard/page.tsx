@@ -1,37 +1,18 @@
-"use client";
-
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
 
 export default function DashboardPage() {
-  const { data: session, status } = useSession();
-  const router = useRouter();
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    if (status === "unauthenticated") {
-      router.push("/login");
-    } else if (status === "authenticated") {
-      setLoading(false);
-    }
-  }, [status, router]);
-
-  if (loading) {
-    return (
-      <div className="flex min-h-screen items-center justify-center">
-        <p className="text-lg">加载中...</p>
-      </div>
-    );
-  }
-
+  // 静态仪表板数据
+  const userData = {
+    name: "示例用户",
+    email: "user@example.com"
+  };
+  
   return (
     <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
       <div className="mb-8">
         <h1 className="text-3xl font-bold">
-          欢迎，{session?.user?.name || "用户"}
+          欢迎，{userData.name}
         </h1>
         <p className="mt-2 text-gray-600">这是您的个人仪表板</p>
       </div>
@@ -40,25 +21,34 @@ export default function DashboardPage() {
         <div className="rounded-lg border bg-white p-6 shadow-sm">
           <h2 className="mb-4 text-xl font-semibold">我的个人资料</h2>
           <p className="mb-4 text-gray-600">更新您的个人信息和兴趣爱好</p>
-          <Link href="/profile">
-            <Button variant="outline">查看资料</Button>
-          </Link>
+          <a 
+            href="/profile"
+            className="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2"
+          >
+            查看资料
+          </a>
         </div>
 
         <div className="rounded-lg border bg-white p-6 shadow-sm">
           <h2 className="mb-4 text-xl font-semibold">我的小组</h2>
           <p className="mb-4 text-gray-600">管理您加入的兴趣小组</p>
-          <Link href="/groups/my-groups">
-            <Button variant="outline">查看小组</Button>
-          </Link>
+          <a 
+            href="/groups/my-groups"
+            className="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2"
+          >
+            查看小组
+          </a>
         </div>
 
         <div className="rounded-lg border bg-white p-6 shadow-sm">
           <h2 className="mb-4 text-xl font-semibold">我的活动</h2>
           <p className="mb-4 text-gray-600">查看您报名参加的活动</p>
-          <Link href="/events/my-events">
-            <Button variant="outline">查看活动</Button>
-          </Link>
+          <a 
+            href="/events/my-events"
+            className="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2"
+          >
+            查看活动
+          </a>
         </div>
       </div>
 
