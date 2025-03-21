@@ -8,7 +8,8 @@ const nextConfig = {
   },
   output: 'standalone',
   experimental: {
-    serverComponentsExternalPackages: ['@prisma/client', 'bcryptjs']
+    serverComponentsExternalPackages: ['@prisma/client', 'bcryptjs'],
+    optimizePackageImports: ['lucide-react']
   },
   typescript: {
     // !! 仅用于演示，生产环境不推荐
@@ -25,12 +26,6 @@ const nextConfig = {
       fs: false,
       net: false,
       tls: false,
-    };
-    
-    // 禁用严格模式，允许在客户端导入服务器组件
-    config.module = {
-      ...config.module,
-      exprContextCritical: false,
     };
     
     return config;
